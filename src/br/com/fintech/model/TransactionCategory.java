@@ -7,11 +7,18 @@ public class TransactionCategory {
 	private String description;
 	private int id;
 	
-	public TransactionCategory(String description, LocalDateTime createdAt, int id) {
+	public TransactionCategory(String description) {
+		super();
+		this.createdAt = LocalDateTime.now();
+		this.description = description;
+		System.out.printf("Categoria %s foi criada! %n", description);
+	}
+	
+	public TransactionCategory(String description, LocalDateTime createdAt, int id ) {
 		super();
 		this.createdAt = createdAt;
-		this.description = description;
 		this.id = id;
+		this.description = description;
 		System.out.printf("Categoria %s foi criada! %n", description);
 	}
 
@@ -19,8 +26,12 @@ public class TransactionCategory {
 		return this.description;
 	}
 
-	public int id() {
+	public int getId() {
 		return this.id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setDescription(String description) {

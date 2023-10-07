@@ -12,17 +12,16 @@ import java.sql.ResultSet;
 
 import br.com.fintech.jdbc.FintechDBManager;
 import br.com.fintech.model.TransactionCategory;
-import br.com.fintech.model.User;
 
 public class OracleTransactionCategoryDao implements TransactionCategoryDAO {
 
 	private Connection connection;
 
-	public void create(TransactionCategory transactionCategory) {
+	public void insert(TransactionCategory transactionCategory) {
 		PreparedStatement stmt = null;
 
 		try {
-			connection = FintechDBManager.obterConexao();
+			this.connection = FintechDBManager.obterConexao();
 			String sql = "INSERT INTO TAB_TRANSACTION_CATEGORY(ID, DESCRIPTION, CREATED_AT) VALUES (SQ_TRANSACTION_CATEGORY.NEXTVAL, ?, ?)";
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, transactionCategory.getDescription());
@@ -31,7 +30,13 @@ public class OracleTransactionCategoryDao implements TransactionCategoryDAO {
 			java.sql.Date createdAt = new java.sql.Date(utilDate.getTime());
 			stmt.setDate(2, createdAt);
 
-			stmt.executeUpdate();
+			if (stmt.executeUpdate() == 1) {
+			    ResultSet generatedKeys = stmt.getGeneratedKeys();
+			    if (generatedKeys.next()) {
+			        long id = generatedKeys.getLong(1);
+			        transactionCategory.setId((int) id);
+			    }
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -45,13 +50,12 @@ public class OracleTransactionCategoryDao implements TransactionCategoryDAO {
 	}
 	
 	public List<TransactionCategory> getAll() {
-	    Connection connection = null;
 	    PreparedStatement stmt = null;
 	    ResultSet resultSet = null;
 	    List<TransactionCategory> transactionCategories = new ArrayList<>();
 
 	    try {
-	        connection = FintechDBManager.obterConexao();
+	        this.connection = FintechDBManager.obterConexao();
 	        String query = "SELECT ID, DESCRIPTION, CREATED_AT FROM TAB_TRANSACTION_CATEGORY";
 	        stmt = connection.prepareStatement(query);
 	        resultSet = stmt.executeQuery();
