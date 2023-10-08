@@ -8,13 +8,19 @@ public class User {
 	private String hashedPassword;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+	private int id = 1;
 
-	public User(String name, String email, String password) {
+	public User(String name, String email, String password, int id) {
+		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.hashedPassword = this.hashPassword(password);
 		this.createdAt = LocalDateTime.now();
 		this.updatedAt = LocalDateTime.now();
+	}
+	
+	public User(int id) {
+		this.id = id;
 	}
 
 	public String hashPassword(String password) {
@@ -54,5 +60,9 @@ public class User {
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
+	}
+	
+	public int getId() {
+		return this.id;
 	}
 }

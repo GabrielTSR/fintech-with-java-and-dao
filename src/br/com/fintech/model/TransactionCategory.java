@@ -3,7 +3,7 @@ package br.com.fintech.model;
 public class TransactionCategory {
 	private String description;
 	private String name;
-	private int id;
+	private int id = 26;
 	
 	public TransactionCategory(String description , String name) {
 		super();
@@ -18,6 +18,10 @@ public class TransactionCategory {
 		this.id = id;
 		this.description = description;
 		System.out.printf("Categoria %s foi criada! %n", description);
+	}
+	
+	public TransactionCategory(int id) {
+		this.id = id;
 	}
 	
 	public String getName() {

@@ -21,6 +21,7 @@ public class OracleTransactionCategoryDao implements TransactionCategoryDAO {
 			String sql = "INSERT INTO TBL_CATEGORY (ID, NAME, DESCRIPTION)\r\n"
 					+ "VALUES (SQ_CATEGORY.nextval, ?, ?)";
 			stmt = connection.prepareStatement(sql);
+			System.out.println(transactionCategory.getName() + ' ' + transactionCategory.getDescription());
 			stmt.setString(1, transactionCategory.getName());
 			stmt.setString(2, transactionCategory.getDescription());
 
