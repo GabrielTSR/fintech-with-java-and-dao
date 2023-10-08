@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import java.sql.ResultSet;
 
 import br.com.fintech.jdbc.FintechDBManager;
@@ -21,14 +17,12 @@ public class OracleTransactionCategoryDao implements TransactionCategoryDAO {
 		PreparedStatement stmt = null;
 
 		try {
-			this.connection = FintechDBManager.obterConexao();
-			String sql = "INSERT INTO TAB_TRANSACTION_CATEGORY(ID, DESCRIPTION, CREATED_AT) VALUES (SQ_TRANSACTION_CATEGORY.NEXTVAL, ?, ?)";
+			this.connection = FintechDBManager.getConnection();
+			String sql = "INSERT INTO TBL_CATEGORY (ID, NAME, DESCRIPTION)\r\n"
+					+ "VALUES (SQ_CATEGORY.nextval, ?, ?)";
 			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, transactionCategory.getDescription());
-			Instant instant = transactionCategory.getCreatedAt().atZone(ZoneId.systemDefault()).toInstant();
-			java.util.Date utilDate = Date.from(instant);
-			java.sql.Date createdAt = new java.sql.Date(utilDate.getTime());
-			stmt.setDate(2, createdAt);
+			stmt.setString(1, transactionCategory.getName());
+			stmt.setString(2, transactionCategory.getDescription());
 
 			if (stmt.executeUpdate() == 1) {
 			    ResultSet generatedKeys = stmt.getGeneratedKeys();
@@ -55,16 +49,16 @@ public class OracleTransactionCategoryDao implements TransactionCategoryDAO {
 	    List<TransactionCategory> transactionCategories = new ArrayList<>();
 
 	    try {
-	        this.connection = FintechDBManager.obterConexao();
-	        String query = "SELECT ID, DESCRIPTION, CREATED_AT FROM TAB_TRANSACTION_CATEGORY";
+	        this.connection = FintechDBManager.getConnection();
+	        String query = "SELECT ID, DESCRIPTION, NAME FROM TBL_CATEGORY";
 	        stmt = connection.prepareStatement(query);
 	        resultSet = stmt.executeQuery();
 
 	        while (resultSet.next()) {
 	            int id = resultSet.getInt("ID");
 	            String description = resultSet.getString("DESCRIPTION");
-	            LocalDateTime createdAt = resultSet.getTimestamp("CREATED_AT").toLocalDateTime();
-	            TransactionCategory category = new TransactionCategory(description, createdAt, id);
+	            String name = resultSet.getString("NAME");
+	            TransactionCategory category = new TransactionCategory(description, name, id);
 	            transactionCategories.add(category);
 	        }
 	    } catch (SQLException e) {
