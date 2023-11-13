@@ -1,22 +1,20 @@
 package br.com.fintech.dao.category;
 
 
-import br.com.fintech.jdbc.FintechDBManager;
-import br.com.fintech.model.Category;
-
-import java.util.List;
-import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.fintech.jdbc.FintechDBManager;
+import br.com.fintech.model.Category;
 
 public class OracleCategoryDAO implements CategoryDAO {
 
 	private Connection connection;
-	
+
 	@Override
 	public void insert(Category category) {
 		PreparedStatement stmt = null;
@@ -25,8 +23,8 @@ public class OracleCategoryDAO implements CategoryDAO {
 			this.connection = FintechDBManager.getConnection();
 			String sql = "INSERT INTO TBL_CATEGORY (ID, NAME, DESCRIPTION) VALUES (SQ_CATEGORY.nextval, ?, ?)";
 			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, transactionCategory.getName());
-			stmt.setString(2, transactionCategory.getDescription());
+			stmt.setString(1, category.getName());
+			stmt.setString(2, category.getDescription());
 
 			stmt.executeUpdate();
 			   
@@ -58,7 +56,7 @@ public class OracleCategoryDAO implements CategoryDAO {
 				int id = resultSet.getInt("ID");
 				String description = resultSet.getString("DESCRIPTION");
 				String name = resultSet.getString("NAME");
-				Category category = new Category(description, name, id);
+				Category category = new Category(id, name, description);
 				categorys.add(category);
 			}
 		} catch (SQLException e) {

@@ -6,6 +6,16 @@ public class Category {
 	private String name;
 	private String description;
 
+	public Category() {
+		super();
+	}
+
+	public Category(int id, String name, String description) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+	}
 
 	public int getId() {
 		return id;
