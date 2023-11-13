@@ -15,6 +15,8 @@ import java.sql.ResultSet;
 
 public class OracleCategoryDAO implements CategoryDAO {
 
+	private Connection connection;
+	
 	@Override
 	public void insert(Category category) {
 		PreparedStatement stmt = null;
