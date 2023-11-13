@@ -40,13 +40,14 @@ public class LoginFilter extends HttpFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpSession session = req.getSession();
 		String url = req.getRequestURI();
+		chain.doFilter(request, response);
 		
-		if (session.getAttribute("email") == null && !url.endsWith("login.jsp") && !url.endsWith("login") && !url.endsWith("register.jsp") && !url.endsWith("register")) {
-			request.setAttribute("error", "Se autentique em nosso sistema");
-			request.getRequestDispatcher("login.jsp").forward(request, response);
-		}else {
-			chain.doFilter(request, response);
-		}
+//		if (session.getAttribute("email") == null && !url.endsWith("login.jsp") && !url.endsWith("login") && !url.endsWith("register.jsp") && !url.endsWith("register")) {
+//			request.setAttribute("error", "Se autentique em nosso sistema");
+//			request.getRequestDispatcher("login.jsp").forward(request, response);
+//		}else {
+//			chain.doFilter(request, response);
+//		}
 		
 	}
 
