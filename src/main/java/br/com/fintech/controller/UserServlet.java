@@ -20,6 +20,7 @@ public class UserServlet extends HttpServlet {
 	private UserDAO dao;
 
     public UserServlet() {
+    	super();
         dao = DAOFactory.getUserDAO();
     }
 

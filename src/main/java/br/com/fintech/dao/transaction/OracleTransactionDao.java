@@ -1,17 +1,17 @@
 package br.com.fintech.dao.transaction;
 
-import java.util.List;
-import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.fintech.jdbc.FintechDBManager;
+import br.com.fintech.model.Category;
 import br.com.fintech.model.Transaction;
-import br.com.fintech.model.TransactionCategory;
 import br.com.fintech.model.User;
 
 public class OracleTransactionDao implements TransactionDAO {
@@ -30,7 +30,7 @@ public class OracleTransactionDao implements TransactionDAO {
 			stmt.setString(2, transaction.getDescription());
 			stmt.setDouble(3, transaction.getValue());
 			stmt.setInt(4, transaction.getUser().getId());
-			stmt.setInt(5, transaction.getTransactionCategory().getId());
+			stmt.setInt(5, transaction.getCategory().getId());
 
 			if (stmt.executeUpdate() == 1) {
 				ResultSet generatedKeys = stmt.getGeneratedKeys();
@@ -78,7 +78,7 @@ public class OracleTransactionDao implements TransactionDAO {
 				User user = new User(userId);
 
 				int categoryId = resultSet.getInt("CATEGORY_ID");
-				TransactionCategory category = new TransactionCategory(categoryId);
+				Category category = new Category(categoryId);
 
 				Transaction transaction = new Transaction(id, title, value, description, createdAt, updatedAt, user,
 						category);

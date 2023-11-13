@@ -19,7 +19,7 @@
     <div class="row justify-content-center mt-5 ">
       <div class="col-lg-4 col-md-6">
         <h1 class="text-center">CADASTRO DE TRANSAÇÃO</h1>
-        <form action="" class="mt-5" id="transactionForm">
+        <form action="TrasactionCadastroServlet" method="POST" class="mt-5" id="transactionForm">
           <div class="form-group">
             <label for="title">Título *</label>
             <input
@@ -60,7 +60,7 @@
               	<c:if test="${not empty categories}">
 			        <!-- Itera sobre as categorias apenas se a lista não estiver vazia -->
 			        <c:forEach var="category" items="${categories}">
-			            <option value="${category.id}">${category.title}</option>
+			            <option value="${category.id}">${category.name}</option>
 			        </c:forEach>
 			    </c:if>
             </select>

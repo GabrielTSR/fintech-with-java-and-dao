@@ -1,6 +1,7 @@
 package br.com.fintech.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import br.com.fintech.dao.transaction.TransactionDAO;
-import br.com.fintech.dao.user.UserDAO;
 import br.com.fintech.exception.DBException;
 import br.com.fintech.factory.DAOFactory;
 import br.com.fintech.model.Transaction;

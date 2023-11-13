@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -20,11 +19,7 @@
         <div class="row justify-content-center mt-5 ">
             <div class="col-lg-4 col-md-6">
                 <h1 class="text-center">LOGIN</h1>
-                 <c:if test="${not empty error}">
-                    <div class="alert alert-danger">
-                        ${error}
-                    </div>
-                </c:if>
+              
                 <form method="post" action="login" class="mt-5" id="loginForm">
                     <div class="form-group">
                         <label for="email">E-mail *</label>

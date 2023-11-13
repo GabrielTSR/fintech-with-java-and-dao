@@ -11,6 +11,7 @@ public class Transaction {
 	private LocalDateTime updatedAt;
 	private User user;
 	private TransactionCategory transactionCategory;
+	private Category category;
 
 	public Transaction(String title, Double value, String description, User user,
 			TransactionCategory transactionCategory) throws Exception {
@@ -27,6 +28,21 @@ public class Transaction {
 		this.transactionCategory = transactionCategory;
 	}
 
+	public Transaction(String title, Double value, String description, User user,
+			Category category) throws Exception {
+		super();
+		this.title = title;
+		if (value == 0) {
+			throw new Exception("A transação deve ser um número diferente de 0");
+		}
+		this.value = value;
+		this.description = description;
+		this.createdAt = LocalDateTime.now();
+		this.updatedAt = LocalDateTime.now();
+		this.user = user;
+		this.category = category;
+	}
+
 	public Transaction(int id, String title, Double value, String description, LocalDateTime createdAt,
 			LocalDateTime updatedAt, User user, TransactionCategory transactionCategory) throws Exception {
 		super();
@@ -41,6 +57,22 @@ public class Transaction {
 		this.updatedAt = updatedAt;
 		this.user = user;
 		this.transactionCategory = transactionCategory;
+	}
+	
+	public Transaction(int id, String title, Double value, String description, LocalDateTime createdAt,
+			LocalDateTime updatedAt, User user, Category category) throws Exception {
+		super();
+		this.id = id;
+		this.title = title;
+		if (value == 0) {
+			throw new Exception("A transação deve ser um número diferente de 0");
+		}
+		this.value = value;
+		this.description = description;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.user = user;
+		this.category = category;
 	}
 
 	public int getId() {
@@ -105,6 +137,14 @@ public class Transaction {
 
 	public TransactionCategory getTransactionCategory() {
 		return transactionCategory;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	@Override
