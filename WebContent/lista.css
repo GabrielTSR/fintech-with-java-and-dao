@@ -1,3 +1,4 @@
+@charset "ISO-8859-1";
 :root {
     --back: #151519;
     --dark-gray: #1D1D20;
@@ -11,18 +12,11 @@
     color: white;
   }
   
-  .form-control {
-    background-color: var(--dark-gray);
-    border: none;
-    color: white;
-    border-radius: 5px;
-  }
   
-  .form-control::placeholder {
-    color: var(--light-gray);
-  }
   
-  h1 {
+ 
+  
+  h3 {
     color: white;
   }
   
@@ -48,6 +42,11 @@
   a:hover {
     color: var(--light-gray);
   }
-  ul:list-group {
-   color: var(--light-gray);
+  ul {
+   background-color: var(--dark-gray);
+  }
+  
+  span{
+  color: var(--hover-green);
+  
   }

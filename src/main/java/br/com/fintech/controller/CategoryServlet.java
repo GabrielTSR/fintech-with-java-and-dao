@@ -19,25 +19,25 @@ import br.com.fintech.model.Category;
 @WebServlet("/CategoryServlet")
 public class CategoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	private CategoryDAO categoryDAO;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CategoryServlet() {
-        super();
-        categoryDAO = DAOFactory.getCategoryDAO();
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public CategoryServlet() {
+		super();
+		categoryDAO = DAOFactory.getCategoryDAO();
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		List<Category> listar = categoryDAO.listar();
-		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		List<Category> listar = categoryDAO.listar();
+
+		request.setAttribute("categories", listar);
+		request.getRequestDispatcher("transaction-register.jsp").forward(request, response);
 	}
 
 }

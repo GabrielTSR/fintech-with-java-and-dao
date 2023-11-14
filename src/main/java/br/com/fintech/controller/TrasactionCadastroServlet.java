@@ -1,6 +1,7 @@
 package br.com.fintech.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -61,7 +62,20 @@ public class TrasactionCadastroServlet extends HttpServlet {
 		        transactionDAO.insert(transaction);
 		        
 		        request.setAttribute("success", "Transação cadastrada com sucesso");
-		        request.getRequestDispatcher("transaction-register.jsp").forward(request, response);
+		        
+	    		List<Transaction> lista = null;
+	    		double saldoTotal = 0;
+				try {
+					
+					lista = transactionDAO.getTransactionsByUser(user.getId());
+					saldoTotal = transactionDAO.getTotalBalanceByUser(user.getId());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+	            request.setAttribute("transactions", lista);
+	            request.setAttribute("saldoTotal", saldoTotal);
+		        
+		        request.getRequestDispatcher("home.jsp").forward(request, response);
 		    } catch (DBException db) {
 		        db.printStackTrace();
 		        request.setAttribute("error", "Erro ao cadastrar");

@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import br.com.fintech.dao.category.CategoryDAO;
+import br.com.fintech.dao.transaction.TransactionDAO;
 import br.com.fintech.dao.user.UserDAO;
 import br.com.fintech.factory.DAOFactory;
-import br.com.fintech.model.Category;
+import br.com.fintech.model.Transaction;
 import br.com.fintech.model.User;
 
 @WebServlet("/login")
@@ -21,12 +21,12 @@ public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private UserDAO dao;
-    private CategoryDAO categoryDAO;
+    private TransactionDAO transactionDAO;
 
     public LoginServlet() {
     	super();
         dao = DAOFactory.getUserDAO();
-        categoryDAO = DAOFactory.getCategoryDAO();
+        transactionDAO = DAOFactory.getTransactionDAO();
 
     }
 
@@ -35,16 +35,26 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         User user = new User(email, password);
+        
 
         if (dao.validate(user)) {
             HttpSession session = request.getSession();
             session.setAttribute("email", email);
             session.setAttribute("id", user.getId());
             
-    		List<Category> lista = categoryDAO.listar();
-            request.setAttribute("categories", lista);
+    		List<Transaction> lista = null;
+    		double saldoTotal = 0;
+			try {
+				
+				lista = transactionDAO.getTransactionsByUser(user.getId());
+				saldoTotal = transactionDAO.getTotalBalanceByUser(user.getId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+            request.setAttribute("transactions", lista);
+            request.setAttribute("saldoTotal", saldoTotal);
             
-            request.getRequestDispatcher("transaction-register.jsp").forward(request, response);
+            request.getRequestDispatcher("home.jsp").forward(request, response);
         } else {
             request.setAttribute("error", "Campos inseridos incorretos");
             request.getRequestDispatcher("login.jsp").forward(request, response);

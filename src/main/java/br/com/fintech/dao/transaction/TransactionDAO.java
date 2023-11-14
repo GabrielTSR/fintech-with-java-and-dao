@@ -8,4 +8,6 @@ public interface TransactionDAO {
 	public void insert(Transaction transaction);
 	
 	public List<Transaction> getAll();
+	public List<Transaction> getTransactionsByUser(int userId) throws Exception ;
+	public double getTotalBalanceByUser(int userId);
 }
